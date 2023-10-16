@@ -1,17 +1,24 @@
 package br.com.zaccsouza.todolist.user.UserControler;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.experimental.var;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
+    @Autowired
+    private IUserRepository userRepository;
+
     @PostMapping("/")
-    public void create(@RequestBody UserModel userModel){
-        System.out.println(userModel.getUsername());
+    public UserModel create(@RequestBody UserModel userModel){
+        var userCreted = this.userRepository.save(userModel);
+        return userCreted;
     }
 
 }
